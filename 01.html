@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <title>Genuary 01</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main></main>
+    <script>
+
+let points = [];
+let maxSize = 25;
+
+function setup() {
+  points = makePoints(500);
+  createCanvas(windowWidth, windowHeight);
+  frameRate(4);
+}
+
+function draw() {
+  for (let p of points) {
+    p.draw();
+  }
+}
+
+function makePoints(n) {
+  const points = [];
+  while (points.length < n) {
+    points.push(new Point());
+  }
+  return points;
+}
+
+function randInt(n) {
+  return Math.floor(Math.random() * n);
+}
+
+class Point {
+
+  constructor() {
+    this.width = randInt(windowWidth);
+    this.height = randInt(windowHeight);
+    this.red = randInt(255);
+    this.green = randInt(255);
+    this.blue = randInt(255);
+    this.alpha = randInt(255);
+    this.size = randInt(255);
+    this.rate = Math.random();
+  }
+
+  draw() {
+    if (this.size > maxSize) {
+      this.erase();
+    } 
+
+    if (this.alpha > 255) {
+      this.alpha = 0;
+    }
+
+    this.size += this.rate;
+    this.alpha += this.rate;
+
+    stroke(this.red, this.green, this.blue, this.alpha);
+    strokeWeight(this.size);
+    point(this.width, this.height);
+  }
+
+  erase() {
+    erase();
+    stroke(this.red, this.green, this.blue); // , this.alpha);
+    strokeWeight(this.size);
+    point(this.width, this.height);
+    noErase();
+    this.size = 0;
+  }
+}
+
+    </script>
+  </body>
+</html>
