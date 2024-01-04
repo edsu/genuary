@@ -9,32 +9,41 @@
     <script>
 
 let width = initialWidth;
-let boxColor = "lightgreen";
+let boxColor = 0;
+const boxColors = [
+  "lightgreen",
+  "yellow",
+  "pink",
+  "lightblue",
+  "red",
+  "white",
+  "black"
+];
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
   width = initialWidth();
-  frameRate(2);
+  frameRate(4);
 }
 
 function initialWidth() {
-  return windowHeight > windowWidth ? windowWidth - 10 : windowHeight - 10;
+  return windowHeight > windowWidth ? windowWidth - 100 : windowHeight - 100;
 }
 
 function draw() {
-  if (width < 25) {
+  if (width < 5) {
     width = initialWidth();
-    boxColor = boxColor == "lightgreen" ? "yellow" : "lightgreen";
+    boxColor = boxColor == boxColors.length - 1 ? 0 : boxColor + 1;
     alpha(220);
   }
 
-  stroke(boxColor);
+  stroke(boxColors[boxColor]);
   drawBox(width);
-  width = int(width * .8);
+  width = int(width * .7);
 }
 
 function drawBox(width) {
-  fill(0);
+  fill(0, 0, 0, 0);
   square(- int(width / 2), - int(width / 2), width);
 }
 
