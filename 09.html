@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <title>Genuary 15</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main></main>
+    <script>
+
+const poem = `
+so much depends
+upon
+
+a red wheel
+barrow
+
+glazed with rain
+water
+
+beside the white
+chickens
+`
+
+let tileWidth = 0;
+let tileHeight = 0;
+let colorPos = 0;
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  background("white");
+  frameRate(.5);
+  tileWidth = windowWidth / 18;
+  tileHeight = windowHeight / 14; 
+}
+
+function draw() {
+  colorPos = Math.floor(random(2));
+  let x = 0;
+  let y = 0;
+  for (const line of poem.split()) {
+    for (let i = 0; i < line.length; i++) {
+      x += tileWidth;
+      if (line[i] == "\n") {
+        y += tileHeight;
+        x = 0;
+      } else {
+        drawTile(x, y, line[i]);
+      }
+    }
+  }
+}
+
+function drawTile(x, y, char) {
+  // assign a color using the ASCII value for the lower case letter (97 - 122) 
+  // normalized to values 0 - 220
+  const asciiCode = (char.charCodeAt(0) - 97) * (220 / 26);
+  let tileColor = color("white");
+  if (char == " ") {
+    fill("white");
+  } else if (colorPos == 0) {
+    fill(256, asciiCode, asciiCode);
+  } else if (colorPos == 1) {
+    fill(asciiCode, asciiCode, 256);
+  }
+
+  // draw the tile
+  smooth();
+  noStroke();
+  rect(x, y, tileWidth, tileHeight);
+  fill("white");
+
+  // draw the char
+  textSize(tileHeight - (tileHeight * .2));
+  textAlign(CENTER, CENTER);
+  text(char, x + (tileWidth / 2), y + (tileHeight / 2));
+}
+
+    </script>
+  </body>
+</html>
